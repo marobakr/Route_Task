@@ -18,6 +18,15 @@
       >
         <td>{{ customer.name }}</td>
         <td>
+          <button
+            (click)="selectCustomerTransactions(customer.transactions)"
+            mat-stroked-button
+            color="primary"
+          >
+            View Transactions
+          </button>
+        </td>
+        <td>
           <table class="table mb-0">
             <thead>
               <tr>
@@ -38,3 +47,9 @@
   </table>
   <div *ngIf="combinedData.length === 0">No data available.</div>
 </section>
+
+<div class="w-50 mx-auto">
+  <app-transaction-chart
+    [transactions]="selectedCustomerTransactions"
+  ></app-transaction-chart>
+</div>

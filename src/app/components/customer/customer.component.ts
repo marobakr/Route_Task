@@ -12,9 +12,9 @@ import { ICustomer, ITransaction } from '../../interface';
   styleUrl: './customer.component.scss',
 })
 export class CustomerComponent {
-  combinedData: any[] = [];
-
   constructor(private dataService: DataService) {}
+
+  combinedData: any[] = [];
 
   ngOnInit(): void {
     this.loadData();
