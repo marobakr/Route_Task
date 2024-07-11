@@ -1,8 +1,12 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
+import { ITransaction } from '../../interface';
 
 Chart.register(...registerables);
 
+/**
+ * Component to display a chart of transactions.
+ */
 @Component({
   selector: 'app-transaction-chart',
   standalone: true,
@@ -10,15 +14,28 @@ Chart.register(...registerables);
   styleUrls: ['./transaction-chart.component.scss'],
 })
 export class TransactionChartComponent implements OnChanges {
-  @Input() transactions: any[] = [];
+  /**
+   * Input property to receive transactions data.
+   */
+  @Input() transactions: ITransaction[] = [];
+
+  /**
+   * Chart instance.
+   */
   chart: any;
 
+  /**
+   * @param changes - Object of SimpleChanges that holds current and previous values.
+   */
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['transactions'] && this.transactions.length) {
       this.createChart();
     }
   }
 
+  /**
+   * Creates the chart and sets its data and configuration.
+   */
   createChart(): void {
     const transactionData = this.aggregateTransactionsByDate(this.transactions);
     const labels = Object.keys(transactionData);
@@ -85,8 +102,17 @@ export class TransactionChartComponent implements OnChanges {
     });
   }
 
+  /**
+   * Aggregates the transactions by date.
+   * @param transactions - Array of transactions.
+   * @returns An object where keys are dates and values are total transaction amounts for those dates.
+   */
   aggregateTransactionsByDate(transactions: any[]): { [key: string]: number } {
     return transactions.reduce((acc, transaction) => {
+      console.log('transactions', transactions);
+      console.log('acc', acc);
+      console.log('transaction', transaction);
+
       const date = new Date(transaction.date).toLocaleDateString();
       if (!acc[date]) {
         acc[date] = 0;

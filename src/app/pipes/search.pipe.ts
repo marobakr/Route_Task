@@ -10,9 +10,6 @@ export class SearchPipe implements PipeTransform {
     userData: IAllDataCustomer[],
     searchProp: { id?: number; amount?: number }
   ): IAllDataCustomer[] {
-    console.log('amount', searchProp.amount);
-    console.log('id', searchProp.id);
-
     if (searchProp.id && searchProp.id <= 5) {
       return userData.filter((customer) => customer.id == searchProp.id);
     } else if (searchProp.amount) {

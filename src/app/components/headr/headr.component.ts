@@ -8,6 +8,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { DataService } from '../../services/data.service';
 
+/**
+ * Header component for the application.
+ */
 @Component({
   selector: 'app-headr',
   standalone: true,
@@ -28,15 +31,29 @@ import { DataService } from '../../services/data.service';
   styleUrl: './headr.component.scss',
 })
 export class HeadrComponent implements OnInit {
-  constructor(private _dataService: DataService) {}
+  /**
+   * Form control for the search input.
+   */
   searchControl!: FormControl;
 
+  /**
+   * Constructor to inject necessary services.
+   * @param _dataService - Service to handle data operations.
+   */
+  constructor(private _dataService: DataService) {}
+
+  /**
+   * Used to initialize the form control.
+   */
   ngOnInit(): void {
     this.createControl();
   }
+
+  /**
+   * Method to create and configure the search form control.
+   */
   createControl(): void {
     this.searchControl = new FormControl();
-    /* if the value was string */
     this.searchControl.valueChanges.subscribe((value) => {
       if (isNaN(value)) {
         const newValue = value.replace(/[a-zA-Z]/g, '');
@@ -44,7 +61,11 @@ export class HeadrComponent implements OnInit {
       }
     });
   }
-  onInputChange() {
+
+  /**
+   * Method to handle input changes and update the data service with the new value.
+   */
+  onInputChange(): void {
     this._dataService.inputValueSubject.next(this.searchControl.value);
   }
 }
