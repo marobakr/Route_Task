@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnChanges } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { IAllDataCustomer, ITransaction } from '../../interface';
 import { SearchPipe } from '../../pipes/search.pipe';
 import { DataService } from '../../services/data.service';
@@ -19,18 +25,31 @@ import { MatButtonModule } from '@angular/material/button';
     MatButtonModule,
   ],
   templateUrl: './table.component.html',
-  styleUrl: './table.component.scss',
+  styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements OnChanges {
+  /**
+   * @param _dataService - Service to handle data operations.
+   */
+  constructor(
+    private _dataService: DataService,
+    private cdr: ChangeDetectorRef
+  ) {}
+
   /**
    * Input property to receive combined customer and transaction data.
    */
   @Input({ required: true }) combinedData: IAllDataCustomer[] = [];
 
   /**
-   * Search value for filtering customer.
+   * Search value for filtering customers.
    */
-  searchValue: number = 0;
+  searchValue!: number;
+
+  /**
+   * Flag to indicate if there are customers available.
+   */
+  itemLengthCustomers: boolean = true;
 
   /**
    * Array to hold transactions of the selected customer.
@@ -38,17 +57,16 @@ export class TableComponent implements OnChanges {
   selectedCustomerTransactions: ITransaction[] = [];
 
   /**
-   * @param _dataService - Service to handle data operations.
+   * @param changes - The changes object containing current and previous values.
    */
-  constructor(private _dataService: DataService) {}
-
-  /**
-   * Used to subscribe to search value changes from the data service.
-   */
-  ngOnChanges(): void {
-    this._dataService.inputValueSubject.subscribe(
-      (data) => (this.searchValue = data)
-    );
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes) {
+      this._dataService.inputValueSubject.subscribe((data) => {
+        this.searchValue = data;
+        this.cdr.detectChanges(); // Trigger change detection
+      });
+      this.subscribeToGetLength();
+    }
   }
 
   /**
@@ -57,5 +75,14 @@ export class TableComponent implements OnChanges {
    */
   selectCustomerTransactions(transactions: ITransaction[]): void {
     this.selectedCustomerTransactions = transactions;
+  }
+
+  /**
+   * Subscribes to the result of search to update item length visibility.
+   */
+  subscribeToGetLength(): void {
+    this._dataService.resultOfSearch.subscribe((data) => {
+      this.itemLengthCustomers = data > 0;
+    });
   }
 }

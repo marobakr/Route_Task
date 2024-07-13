@@ -109,10 +109,6 @@ export class TransactionChartComponent implements OnChanges {
    */
   aggregateTransactionsByDate(transactions: any[]): { [key: string]: number } {
     return transactions.reduce((acc, transaction) => {
-      console.log('transactions', transactions);
-      console.log('acc', acc);
-      console.log('transaction', transaction);
-
       const date = new Date(transaction.date).toLocaleDateString();
       if (!acc[date]) {
         acc[date] = 0;

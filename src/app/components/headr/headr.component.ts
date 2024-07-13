@@ -55,6 +55,7 @@ export class HeadrComponent implements OnInit {
   createControl(): void {
     this.searchControl = new FormControl();
     this.searchControl.valueChanges.subscribe((value) => {
+      /* Check If Input Not number  */
       if (isNaN(value)) {
         const newValue = value.replace(/[a-zA-Z]/g, '');
         this.searchControl.setValue(newValue, { emitEvent: false });
@@ -68,4 +69,7 @@ export class HeadrComponent implements OnInit {
   onInputChange(): void {
     this._dataService.inputValueSubject.next(this.searchControl.value);
   }
+  /**
+   * Method to reset the search input and update the data service.
+   */
 }

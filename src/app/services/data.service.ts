@@ -11,6 +11,7 @@ export class DataService {
   private baseApi: string = 'http://localhost:3000';
 
   inputValueSubject = new BehaviorSubject<number>(0);
+  resultOfSearch = new BehaviorSubject<number>(0);
   getCustomers(): Observable<any> {
     return this._httpClient.get(`${this.baseApi}/customers`);
   }
