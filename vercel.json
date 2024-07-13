@@ -1,7 +1,6 @@
 {
   "version": 2,
   "public": true,
-  "name": "route-task",
   "rewrites": [
     {
       "source": "/api/json-server/(.*)",
@@ -9,8 +8,8 @@
     }
   ],
   "functions": {
-    "api/index.js": {
-      "includeFiles": "dist/route-task/browser/**"
+    "api/json-server.js": {
+      "includeFiles": "db/db.json"
     }
   }
 }

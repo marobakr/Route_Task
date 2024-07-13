@@ -6,9 +6,14 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class DataService {
-  constructor(private _httpClient: HttpClient) {}
+  private baseApi: string;
 
-  private baseApi: string = 'http://localhost:3000';
+  constructor(private _httpClient: HttpClient) {
+    this.baseApi =
+      typeof window === 'undefined'
+        ? 'http://localhost:3000/api/json-server' // Server-side URL
+        : '/api/json-server'; // Client-side URL
+  }
 
   inputValueSubject = new BehaviorSubject<number>(0);
   resultOfSearch = new BehaviorSubject<number>(0);
