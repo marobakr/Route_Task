@@ -8,7 +8,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class DataService {
   constructor(private _httpClient: HttpClient) {}
 
-  private baseApi = 'https://route-task-mauve.vercel.app';
+  private baseApi = 'https://db-server-amber.vercel.app';
 
   inputValueSubject = new BehaviorSubject<number>(0);
   resultOfSearch = new BehaviorSubject<number>(0);

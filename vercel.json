@@ -1,15 +1,11 @@
 {
   "version": 2,
   "public": true,
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "api/server.js"
-    }
-  ],
+  "name": "route-task",
+  "rewrites": [{ "source": "/(.*)", "destination": "/api" }],
   "functions": {
-    "api/server.js": {
-      "includeFiles": "db/db.json"
+    "api/index.js": {
+      "includeFiles": "dist/route-task/browser/**"
     }
   }
 }
