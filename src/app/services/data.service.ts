@@ -6,14 +6,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class DataService {
-  private baseApi: string;
+  constructor(private _httpClient: HttpClient) {}
 
-  constructor(private _httpClient: HttpClient) {
-    this.baseApi =
-      typeof window === 'undefined'
-        ? 'http://localhost:3000/api/json-server' // Server-side URL
-        : '/api/json-server'; // Client-side URL
-  }
+  private baseApi = 'https://your-vercel-app-url/api/json-server'; // Replace with your actual deployed URL
 
   inputValueSubject = new BehaviorSubject<number>(0);
   resultOfSearch = new BehaviorSubject<number>(0);
