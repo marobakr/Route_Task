@@ -3,12 +3,12 @@
   "public": true,
   "rewrites": [
     {
-      "source": "/api/json-server/(.*)",
-      "destination": "/api/json-server.js"
+      "source": "/(.*)",
+      "destination": "api/server.js"
     }
   ],
   "functions": {
-    "api/json-server.js": {
+    "api/server.js": {
       "includeFiles": "db/db.json"
     }
   }
