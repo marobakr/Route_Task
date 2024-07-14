@@ -14,17 +14,14 @@ export class SearchPipe implements PipeTransform {
     searchProp: { id?: number; amount?: number }
   ): IAllDataCustomer[] {
     this.resultOfSearch = userData; // Default value
-    if (searchProp.id || searchProp.amount) {
-      if (searchProp.id) {
-        this.resultOfSearch = userData.filter(
-          (customer) => customer.id === searchProp.id
-        );
-      } else if (searchProp.amount) {
-        this.resultOfSearch = userData.filter((customer) =>
-          customer.transactions.some((x) => x.amount === searchProp.amount)
-        );
-      }
-    }
+    if (searchProp.id && searchProp.id <= 5) {
+      this.resultOfSearch = userData.filter(
+        (customer) => customer.id == searchProp.id
+      );
+    } else if (searchProp.amount)
+      this.resultOfSearch = userData.filter((customer) =>
+        customer.transactions.some((x) => x.amount == searchProp.amount)
+      );
 
     // Update search result for other components To update length
     this._dataService.resultOfSearch.next(this.resultOfSearch.length);
